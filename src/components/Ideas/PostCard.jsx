@@ -12,7 +12,9 @@ const PostCard = ({ img, publishedAt, title }) => {
 						className="w-full aspect-video object-cover"
 					/>
 					<div className="p-4 flex flex-col gap-1 mt-4">
-						<p className="text-gray-400 font-bold">{formatDate(publishedAt)}</p>
+						<p className="text-gray-400 font-bold">
+							{formatDate(new Date(publishedAt))}
+						</p>
 						<h1 className="line-clamp-3 text-black font-bold font-lg">
 							{title}
 						</h1>
