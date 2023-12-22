@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Brand from "../../Brand"
 import Container from "../../Container"
 import { navItems } from "../../../lib/navItems"
-import NavItem from "./Navitem"
+import NavItem from "./NavItem"
 
 const Navbar = () => {
 	const [show, setShow] = useState(true)
