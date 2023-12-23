@@ -61,6 +61,7 @@ const ListPost = () => {
 					{isLoading ? (
 						<img src={loading} className="animate-spin w-16 h-16" />
 					) : null}
+					{error ? <p className="font-medium text-lg">{error}</p> : null}
 				</div>
 			) : null}
 		</div>
