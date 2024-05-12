@@ -20,6 +20,7 @@ const ListPost = () => {
 					pageNumber: post.currentPageNumber,
 					pageSize: filter.showPerPage,
 					sortBy: filter.sortBy,
+					search: filter.search,
 				})
 				setPost((currentVal) => {
 					return {
@@ -28,6 +29,7 @@ const ListPost = () => {
 						total: response?.meta.total,
 					}
 				})
+				setError("")
 			} catch (error) {
 				setIsLoading(false)
 				setError("Terjadi Kesalahan")

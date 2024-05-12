@@ -1,7 +1,8 @@
 import { useRecoilState } from "recoil"
 import FilterInput from "./FilterInput"
 import { filterState } from "../../atom/filterState"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import Search from "./Search"
 
 const showPerPage = [10, 20, 50]
 const sortBy = [
@@ -15,8 +16,25 @@ const sortBy = [
 	},
 ]
 
+const useDebouncedValue = (inputValue, delay) => {
+	const [debouncedValue, setDebouncedValue] = useState(inputValue)
+
+	useEffect(() => {
+		const handler = setTimeout(() => {
+			setDebouncedValue(inputValue)
+		}, delay)
+
+		return () => {
+			clearTimeout(handler)
+		}
+	}, [inputValue, delay])
+
+	return debouncedValue
+}
+
 const Filter = () => {
 	const [filter, setFilter] = useRecoilState(filterState)
+	const [search, setSearch] = useState("")
 
 	const handleSetFilter = (value, filterName) => {
 		setFilter((currentVal) => {
@@ -27,12 +45,33 @@ const Filter = () => {
 		})
 	}
 
+	const debouncedSearchTerm = useDebouncedValue(search, 500)
+
+	useEffect(() => {
+		if (search.length > 3) {
+			setFilter((currentVal) => {
+				return {
+					...currentVal,
+					search: search,
+				}
+			})
+		}
+	}, [debouncedSearchTerm])
+
+	const handleSearch = (value) => {
+		setSearch(value)
+	}
+
 	useEffect(() => {
 		localStorage.setItem("filter", JSON.stringify(filter))
 	}, [filter])
 
 	return (
 		<div className="flex flex-row gap-4 flex-wrap justify-end text-right">
+			<Search
+				value={search}
+				onValueChange={(e) => handleSearch(e.target.value)}
+			/>
 			<FilterInput
 				value={filter.showPerPage}
 				onValueChange={(e) =>

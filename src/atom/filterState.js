@@ -7,5 +7,6 @@ export const filterState = atom({
 			JSON.parse(localStorage.getItem("filter"))?.sortBy || "-published_at",
 		showPerPage:
 			Number(JSON.parse(localStorage.getItem("filter"))?.showPerPage) || 10,
+		search: "",
 	},
 })
